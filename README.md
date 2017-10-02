@@ -1,5 +1,5 @@
 # mylly-devexpress-mvc
-This is an open source project demo with small example for creating ERP system. It is built using ASP.Net, MVC5, Devexpress UI extesions, Bootstrap, jQuery, JavaScript, SQL-server.
+This is an open source project demo with a small example for creating ERP system. It is built using ASP.Net, MVC5, Devexpress UI extesions, Bootstrap, jQuery, JavaScript, SQL-server.
 
 MVC architecture used in this small ERP project emerged as a tailored solution for our business problem.
 
