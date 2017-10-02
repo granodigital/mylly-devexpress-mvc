@@ -1,0 +1,280 @@
+﻿
+@model DemoProject.Models.Order
+@using DemoProject.Controllers
+@using DemoProject.Models
+
+@{
+    Html.EnableClientValidation();
+    Html.EnableUnobtrusiveJavaScript();
+}
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/MicrosoftAjax.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/MicrosoftMvcAjax.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/MicrosoftMvcValidation.js")" type="text/javascript"></script>
+
+
+<script type="text/javascript" language="javascript">
+
+
+    function OrderRoundPanel_OnInit(s, e) {
+        var I = ASPxClientControl.GetControlCollection().GetByName("OrderId").GetText();
+        if (I == "") {
+            CallBackBtn_Click(s, e);
+        }
+    }
+
+    function ClearBtn_Click(s, e) {
+        OrderRoundPanel.PerformCallback({ OrderName: "", TotalPrice: "", ValidUntil: "", DeliveryDate: "" });
+    }
+
+    function ProductCallBackPanel_OnInit(s, e) {
+        var P = ASPxClientControl.GetControlCollection().GetByName("ProductName").GetText();
+        if (P == "") {
+            Product_pageControlCallback.PerformCallback({ command: "SETFIRSTPRODUCT" });
+        }
+    }
+
+    function CallBackBtn_Click(s, e) {
+
+        var I = ASPxClientControl.GetControlCollection().GetByName("OrderId").GetValue();
+        var O = ASPxClientControl.GetControlCollection().GetByName("OrderName").GetValue();
+        var T = ASPxClientControl.GetControlCollection().GetByName("TotalPrice").GetValue();
+        var D = ASPxClientControl.GetControlCollection().GetByName("DeliveryDate").GetValue();
+        var V = ASPxClientControl.GetControlCollection().GetByName("ValidUntil").GetValue();
+        var PI = ASPxClientControl.GetControlCollection().GetByName("ProductId").GetValue();
+
+        var DD = new Date(D);
+        var VV = new Date(V);
+        OrderRoundPanel.PerformCallback({ OrderId: I, OrderName: O, TotalPrice: T, ValidUntil: VV.toDateString(), DeliveryDate: DD.toDateString() });
+    }
+
+    function CheckBasicOrderValues() {
+
+        var OrderName = ASPxClientControl.GetControlCollection().GetByName("OrderName");
+        var TotalPrice = ASPxClientControl.GetControlCollection().GetByName("TotalPrice");
+        var DeliveryDate = ASPxClientControl.GetControlCollection().GetByName("DeliveryDate");
+        var ValidUntil = ASPxClientControl.GetControlCollection().GetByName("ValidUntil");
+
+        if ((OrderName.GetValue() != null) && (TotalPrice.GetValue() != null) && (DeliveryDate.GetValue() != null) && (ValidUntil.GetValue() != null))
+            return "true";
+        return false;
+
+   }
+
+    function IncludePriceCombo_Click(s, e) {
+        var PP = ASPxClientControl.GetControlCollection().GetByName("IncludeProductPrice").GetValue();
+        var PP = ASPxClientControl.GetControlCollection().GetByName("ProductPrice").GetValue();
+
+
+        if (s.GetValue() == true)
+            Callback_Control.PerformCallback({ IncludeProductPrice: PP, ProductPrice: PP, command: "ADDPRICE" });
+        else
+
+            Callback_Control.PerformCallback({ IncludeProductPrice: PP, ProductPrice: PP, command: "REMOVEPRICE" });
+
+    }
+
+    function OnProductTabChange(s, e) {
+
+        var I = ASPxClientControl.GetControlCollection().GetByName("OrderId").GetValue();
+        var O = ASPxClientControl.GetControlCollection().GetByName("OrderName").GetValue();
+        var T = ASPxClientControl.GetControlCollection().GetByName("TotalPrice").GetValue();
+        var D = ASPxClientControl.GetControlCollection().GetByName("DeliveryDate").GetValue();
+        var V = ASPxClientControl.GetControlCollection().GetByName("ValidUntil").GetValue();
+
+        var DD = new Date(D);
+        var VV = new Date(V);
+
+        if (e.tab.GetText() == '+') {
+            e.cancel = true;
+            Product_pageControlCallback.PerformCallback({ command: "ADDPRODUCT", parameter: e.tab.name });
+
+        }
+        else {
+
+            Product_pageControlCallback.PerformCallback({ OrderId: I, OrderName: O, TotalPrice: T, ValidUntil: VV.toDateString(), DeliveryDate: DD.toDateString() ,command: "GETPRODUCT", parameter: e.tab.name });
+        }
+
+    }
+
+    function Product_UpdateBtn_Click(s, e) {
+        var ProductName = ASPxClientControl.GetControlCollection().GetByName("ProductName").GetValue();
+        Product_pageControlCallback.PerformCallback({ command: "UPDATEPRODUCTNAME", parameter: ProductName });
+
+    }
+
+    function Product_UpdateSaveBtn_Click() {
+
+        // Deduct previous product value from OrderTotalPrice, if IncludePrice check is on, then add new product value into total price.
+
+        Product_pageControlCallback.PerformCallback({ command: "UPDATESAVEPRODUCT" });
+    }
+
+    function Product_ClearBtn_Click() {
+        Product_pageControlCallback.PerformCallback({ command:"CLEARPRODUCT" });
+
+    }
+
+    function MaterialCombo_Click(s, e) {
+
+    }
+
+    function OrdersCombo_Click(s,e)
+    {
+        Callback_Control.PerformCallback({ RequestedOrderId: s.GetValue(), command: "GETORDER" });
+
+       $('#myForm').submit();
+    }
+
+    function NewBtn_Click(s, e)
+    {
+        Callback_Control.PerformCallback({ command: "NEWORDER" });
+
+        $('#myForm').submit();
+    }
+    function UpdateBtn_Click(s, e)
+    {
+        var I = ASPxClientControl.GetControlCollection().GetByName("OrderId").GetValue();
+
+        Callback_Control.PerformCallback({ RequestedOrderId: I,command: "UPDATEORDER" });
+
+        $('#myForm').submit();
+
+
+    }
+
+    function SendBtn_Click(s, e)
+    {
+        var isvalid = CheckBasicOrderValues();
+        var I = ASPxClientControl.GetControlCollection().GetByName("OrderId").GetValue();
+        var O = ASPxClientControl.GetControlCollection().GetByName("OrderName").GetValue();
+        var T = ASPxClientControl.GetControlCollection().GetByName("TotalPrice").GetValue();
+        var D = ASPxClientControl.GetControlCollection().GetByName("DeliveryDate").GetValue();
+        var V = ASPxClientControl.GetControlCollection().GetByName("ValidUntil").GetValue();
+        var DD = new Date(D);
+        var VV = new Date(V);
+
+        Callback_Control.PerformCallback({ OrderId: I, OrderName: O, TotalPrice: T, ValidUntil: VV.toDateString(), DeliveryDate: DD.toDateString(), command: "SEND" });
+
+         if (isvalid != "true") {
+             Errorlbl.SetText("*Incomplete Order Information*");
+             Notificationlbl.SetText("");
+         }
+         else {
+             Errorlbl.SetText("");
+             Notificationlbl.SetText("Order SENT Successfully !!");
+             $("#myForm").submit(@Model);
+         }
+    }
+
+ function SaveBtn_Click(s, e)
+    {
+        var isvalid = CheckBasicOrderValues();
+        var I = ASPxClientControl.GetControlCollection().GetByName("OrderId").GetValue();
+        var O = ASPxClientControl.GetControlCollection().GetByName("OrderName").GetValue();
+        var T = ASPxClientControl.GetControlCollection().GetByName("TotalPrice").GetValue();
+        var D = ASPxClientControl.GetControlCollection().GetByName("DeliveryDate").GetValue();
+        var V = ASPxClientControl.GetControlCollection().GetByName("ValidUntil").GetValue();
+        var PI = ASPxClientControl.GetControlCollection().GetByName("ProductId").GetValue();
+        var PN = ASPxClientControl.GetControlCollection().GetByName("ProductName").GetValue();
+        var DD = new Date(D);
+        var VV = new Date(V);
+
+        Callback_Control.PerformCallback({ OrderId: I, OrderName: O, TotalPrice: T, ValidUntil: VV.toDateString(), DeliveryDate: DD.toDateString(), ProductId:PI, ProductName:PN, command: "SAVE" });
+        if (isvalid != "true") {
+            Errorlbl.SetText("*Incomplete Order Information*");
+            Notificationlbl.SetText("");
+         }
+         else {
+            Errorlbl.SetText("");
+            Notificationlbl.SetText("Order SAVED Successfully !!");
+            $("#myForm").submit(@Model);
+        }
+    }
+
+</script>
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { id = "myForm" }))
+{
+   <div>
+       @Html.DevExpress().Label(
+       settings =>{
+                settings.Name = "OrderLabel";
+                settings.Text = "Select Order Name:";
+       }).GetHtml()
+       
+       @Html.DevExpress().ComboBoxFor(model => model.RequestedOrderId,
+                settings =>{
+                    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                    settings.Properties.TextField = "OrderName";
+                    settings.Properties.ValueField = "OrderId";
+                    settings.Properties.NullText = "[Select]";
+                    settings.Properties.ClientSideEvents.SelectedIndexChanged = "OrdersCombo_Click";
+                }
+                ).BindList(OrderViewData.Orders).GetHtml()
+   </div>
+
+   <div class="row" style="float:right; padding-top:10px; padding-bottom:10px">
+      
+       @Html.DevExpress().Button(
+        btnSettings =>
+    {
+        btnSettings.Name = "btnNewOrder";
+        btnSettings.Text = "New Order";
+        btnSettings.ControlStyle.CssClass = "button";
+        btnSettings.ClientSideEvents.Click = "NewBtn_Click";
+    }).GetHtml()
+         
+       @Html.DevExpress().Button(
+        btnSettings =>
+    {
+        btnSettings.Name = "btnUpdateOrder";
+        btnSettings.Text = "Update Order Database";
+        btnSettings.ControlStyle.CssClass = "button";
+        btnSettings.ClientSideEvents.Click = "UpdateBtn_Click";
+    }).GetHtml()
+
+       @Html.DevExpress().Button(
+        btnSettings =>
+    {
+        btnSettings.Name = "btnSend";
+        btnSettings.Text = "Send Order";
+        btnSettings.ControlStyle.CssClass = "button";
+        btnSettings.ClientSideEvents.Click = "SendBtn_Click";
+    }).GetHtml()
+
+       @Html.DevExpress().Button(
+        btnSettings =>
+    {
+        btnSettings.Name = "btnSave";
+        btnSettings.Text = "Save Order Database";
+        btnSettings.ControlStyle.CssClass = "button";
+        btnSettings.ClientSideEvents.Click = "SaveBtn_Click";
+    }).GetHtml()
+
+       @Html.DevExpress().Button(
+        btnSettings =>
+    {
+        btnSettings.Name = "btnCallBack";
+        btnSettings.Text = "CallBack";
+        btnSettings.ControlStyle.CssClass = "button";
+        btnSettings.ClientSideEvents.Click = "CallBackBtn_Click";
+    }).GetHtml()
+       
+       @Html.DevExpress().Button(
+       btnSettings =>
+    {
+    btnSettings.Name = "btnClear";
+    btnSettings.Text = "Clear";
+    btnSettings.ControlStyle.CssClass = "button";
+    btnSettings.ClientSideEvents.Click = "ClearBtn_Click";
+    }).GetHtml()
+ </div>
+ 
+  @Html.Partial("_OrderRoundPanel_Partial", Model)
+
+  @Html.Partial("_ProductTabControl_Partial", Model)
+}

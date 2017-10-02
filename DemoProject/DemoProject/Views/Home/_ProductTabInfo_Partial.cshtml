@@ -1,0 +1,12 @@
+﻿@using DemoProject.Models;
+@model Order
+<div style=" padding-left:10px">
+    <hr />
+
+    <h4>This is Product Id =  @Model.Products[Model.ActiveProductIndex].ProductId </h4>
+    @Html.HiddenFor(model => model.Products[Model.ActiveProductIndex].ProductId)
+    <hr />
+    <h4> Product Name : @Model.Products[Model.ActiveProductIndex].ProductName </h4>
+    @Html.HiddenFor(model => model.Products[Model.ActiveProductIndex].ProductName)
+
+</div>

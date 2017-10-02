@@ -1,0 +1,140 @@
+﻿@model DemoProject.Models.Order 
+@using DemoProject.Controllers
+@using DemoProject.Models;
+
+
+<div class="row ">
+
+
+    <div class="col-md-3">
+        <h4>
+            <label style="color:Black">
+                OrderId:
+            </label>
+            @Html.DevExpress().TextBoxFor(model => model.OrderId,
+               settings =>
+               {
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(30);
+                   //settings.Enabled = false;
+               }).GetHtml()
+        </h4>
+
+     
+            </div>
+
+    <div class="col-md-3">
+        @Html.DevExpress().Label(
+        settings =>
+        {
+            settings.Text = "";
+            settings.Name = "ErrorLbl";
+            settings.ControlStyle.ForeColor = System.Drawing.Color.Red;
+            settings.PreRender = (sender, e) =>
+            {
+                ASPxLabel lb = (ASPxLabel) sender;
+                lb.ClientInstanceName = "Errorlbl";
+
+            };
+        }).GetHtml()
+
+        @Html.DevExpress().Label(
+        settings =>
+        {
+            settings.Text = "";
+            settings.Name = "NotificationLbl";
+            settings.ControlStyle.ForeColor = System.Drawing.Color.Blue;
+            settings.PreRender = (sender, e) =>
+            {
+                ASPxLabel lb = (ASPxLabel) sender;
+                lb.ClientInstanceName = "Notificationlbl";
+
+            };
+        }).GetHtml()
+        </div>
+
+</div>
+
+    <div class="row ">
+        <div class="col-md-6">
+
+            <div class="row">
+                <div class="col-md-3">
+                    Name: <label style = "color:red" > *</label >
+                </div >
+                <div class="col-md-9">
+                    @Html.DevExpress().TextBoxFor(model => model.OrderName,
+                                 settings =>
+                                 {   
+                                     settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                     settings.Properties.NullText = "[Enter Name]";
+                                 }).GetHtml()
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-3">
+                    TotalPrice:<label style = "color:red" > *</label >
+                </div >
+                <div class="col-md-9">
+                    @Html.Partial("_CallBack_Partial", Model)
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding-top: 10px">
+        <div class="col-md-6">
+
+            <div class="row">
+                <div class="col-md-3">
+                    Delivery Date:<label style = "color:red" > *</label >
+                </div >
+                <div class="col-md-6">
+                    @Html.DevExpress().DateEditFor(model => model.DeliveryDate,
+                  settings =>
+                  {
+                      settings.Properties.DropDownButton.Image.Url = "~/Images/calendar-icon.png";
+                      settings.Properties.DropDownButton.ImagePosition = ImagePosition.Left;
+                      settings.Properties.DropDownButton.Image.Height = 15;
+                      settings.Properties.DropDownButton.Image.Width = 15;
+                      settings.Properties.DisplayFormatString = "d";
+                      settings.Properties.UseMaskBehavior = true;
+                      settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                  }).GetHtml()
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-3">
+                    Valid Until: <label style = "color:red" > *</label>
+                </div >
+                <div class="col-md-6">
+                    @Html.DevExpress().DateEditFor(model => model.ValidUntil,
+                     settings =>
+                     {
+                         settings.Properties.DropDownButton.Image.Url = "~/Images/calendar-icon.png";
+                         settings.Properties.DropDownButton.ImagePosition = ImagePosition.Left;
+                         settings.Properties.DropDownButton.Image.Height = 15;
+                         settings.Properties.DropDownButton.Image.Width = 15;
+                         settings.Properties.DisplayFormatString = "d";
+                         settings.Properties.UseMaskBehavior = true;
+                         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+                     }
+                     ).GetHtml()
+
+                </div>
+            </div>
+        </div>
+    </div>
+<hr />
+    <div >
+        <h4>
+        @*    This order has @OrderViewData.Product_Quantity  products. Current Tab Index is @OrderViewData.ActiveProductIndex*@
+        </h4>
+    </div>
+
+

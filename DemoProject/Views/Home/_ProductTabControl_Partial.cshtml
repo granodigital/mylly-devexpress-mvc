@@ -1,0 +1,43 @@
+﻿
+@using DemoProject.Models;
+@model DemoProject.Models.Order
+
+@Html.DevExpress().CallbackPanel(settings => {
+
+    settings.Name = "Product_pageControlCallback";
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "Home", Action = "_ProductTabControl_Partial", };
+    settings.ClientSideEvents.Init = "ProductCallBackPanel_OnInit";
+    settings.SetContent(() =>
+    {
+        Html.DevExpress().PageControl(Settings => {
+            Settings.Name = "pageControl";
+            Settings.EnableClientSideAPI = true;
+            Settings.TabPages.Clear();
+            Settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+            Settings.EnableTabScrolling = true;
+            Settings.TabAlign = TabAlign.Left;
+            Settings.Styles.Tab.Wrap = DefaultBoolean.True;
+            Settings.EnableCallbackAnimation = true;
+
+            foreach (Product info in OrderViewData.Products){
+                MVCxTabPage page = Settings.TabPages.Add("&nbsp&nbsp" + info.ProductId.ToString() + "-" + info.ProductName + "" + "&nbsp&nbsp", info.ProductId.ToString());
+                page.SetTabTemplateContent(container1 =>
+                {
+                    ViewContext.Writer.Write("<div style='font-weight: bold;'>" + container1.TabPage.Text + "</div>");
+                });
+                if (info.IsActive == true)
+                {
+                    OrderViewData.ActiveProductIndex = info.ProductId -1;
+                    page.SetContent(() =>
+                    {
+                        Html.RenderPartial("_ProductTabInfo_Partial", Model);
+                    });
+                }}
+            Settings.ActiveTabIndex = OrderViewData.ActiveProductIndex;
+            MVCxTabPage page2 = Settings.TabPages.Add("+", (OrderViewData.Products.Count()+1).ToString());
+
+            Settings.ClientSideEvents.ActiveTabChanging = string.Format("function(s,e) {{ OnProductTabChange(s,e);}}");
+        }).Render();
+    });
+}).GetHtml()

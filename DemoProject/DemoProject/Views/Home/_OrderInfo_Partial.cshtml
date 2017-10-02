@@ -1,0 +1,102 @@
+﻿@model DemoProject.Models.Order 
+@using DemoProject.Controllers
+
+
+@{ 
+
+    int product_quantity = Model.Products.Count();
+
+}
+
+
+<div class="row ">
+    <div class="col-md-6">
+
+        <div class="row">
+            <div class="col-md-3">
+                Name: <label style="color:red"> *</label>
+            </div>
+            <div class="col-md-9">
+                @Html.DevExpress().TextBoxFor(model => model.OrderName,
+                                 settings =>
+                                 {
+                                     settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                     settings.Properties.NullText = "[Enter Name]";
+                                 }).GetHtml()
+
+                            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-3">
+               TotalPrice:
+            </div>
+            <div class="col-md-9">
+                @Html.DevExpress().TextBoxFor(model => model.TotalPrice,
+     settings =>
+     {
+         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+         settings.Properties.NullText = "0,00 $";
+         settings.Properties.DisplayFormatString = "0,00 $";
+     }
+     ).GetHtml()
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style= "padding-top: 10px">
+    <div class="col-md-6">
+
+        <div class="row">
+            <div class="col-md-3">
+              Delivery Date:
+            </div>
+            <div class="col-md-6" >
+                @Html.DevExpress().DateEditFor(model => model.DeliveryDate,
+                                 settings =>
+                                 {
+                                     settings.Properties.DropDownButton.Image.Url = "~/Images/calendar-icon.png";
+                                     settings.Properties.DropDownButton.ImagePosition = ImagePosition.Left;
+                                     settings.Properties.DropDownButton.Image.Height = 15;
+                                     settings.Properties.DropDownButton.Image.Width = 15;
+                                     settings.Properties.DisplayFormatString = "f";
+                                     settings.Properties.NullText = "MM/dd/yyyy";
+
+                                     settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                 }).GetHtml()
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-3">
+                Valid Until:
+            </div>
+            <div class="col-md-6" >
+                @Html.DevExpress().DateEditFor(model => model.ValidUntil,
+     settings =>
+     {
+
+         settings.Properties.DropDownButton.Image.Url = "~/Images/calendar-icon.png";
+         settings.Properties.DropDownButton.ImagePosition = ImagePosition.Left;
+         settings.Properties.DropDownButton.Image.Height = 15;
+         settings.Properties.DropDownButton.Image.Width = 15;
+         settings.Properties.DisplayFormatString = "f";
+         settings.Properties.NullText = "MM/dd/yyyy";
+         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+     }
+     ).GetHtml()
+
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <h4>
+        This order has @product_quantity many products. 
+    </h4>
+    </div>

@@ -1,0 +1,29 @@
+﻿@using DemoProject.Models;
+@model Order
+@Html.DevExpress().CallbackPanel(settings =>
+{
+settings.Name = "Callback_Control";
+settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+settings.CallbackRouteValues = new
+{
+    Controller = "Home",
+    Action = "_CallBack_Partial",
+};
+settings.SetContent(() =>
+{
+
+    Html.DevExpress().TextBoxFor(model => model.TotalPrice,
+                     tsettings =>
+                     {
+
+                         tsettings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                         tsettings.Properties.NullText = "";
+
+                     }
+                     ).Bind(OrderViewData.CalculatedPrice).Render();
+
+
+    
+});
+}).GetHtml()

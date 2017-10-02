@@ -1,0 +1,17 @@
+﻿@using DemoProject.Models;
+@model Order
+
+<hr>
+The submitted data has been successfully accepted.&nbsp;@Html.ActionLink("Reload Order demo", "Index")
+<hr>
+Order Id = @Model.OrderId.ToString()
+<hr>
+Order Name = @Model.OrderName
+<hr>
+Total price= @Model.TotalPrice
+<hr>
+Order Delivery Date = @Model.DeliveryDate.ToString()
+<hr>
+Order Valid Until = @Model.ValidUntil.ToString()
+<hr>
+No.of Products in Order = @OrderViewData.Products.Count();

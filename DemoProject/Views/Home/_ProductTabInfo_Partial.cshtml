@@ -1,0 +1,121 @@
+﻿@using DemoProject.Models;
+@model Order
+
+<div class="row">
+    <div class="col-md-6">
+       <div class="row">
+            <div class="col-md-3">
+                Product Id: </div>
+            <div class="col-md-9">
+                @Html.DevExpress().TextBoxFor(model => model.ProductId, settings => {
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                    }).Bind(OrderViewData.Products[OrderViewData.ActiveProductIndex].ProductId).GetHtml()
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                Product Name: </div>
+            <div class="col-md-6">
+                
+                @Html.DevExpress().TextBoxFor(model => model.ProductName,settings =>{
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   }).GetHtml()
+             </div>
+            <div class="col-md-3">
+
+                @Html.DevExpress().Button(btnSettings =>
+           {
+               btnSettings.Name = "btnProductUpdate";
+               btnSettings.Text = "Update";
+               btnSettings.ControlStyle.CssClass = "button";
+               btnSettings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+               btnSettings.ClientSideEvents.Click = "Product_UpdateBtn_Click";
+           }).GetHtml()
+            </div>
+            </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                Material:  </div>
+            <div class="col-md-9">
+
+                @Html.DevExpress().ComboBoxFor(model => model.MaterialId, settings => {
+                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                    settings.Properties.TextField = "MaterialName";
+                    settings.Properties.ValueField = "MaterialId";
+                    settings.Properties.NullText = "[Select]";
+                    settings.Properties.ClientSideEvents.SelectedIndexChanged = "MaterialCombo_Click";
+                }
+                ).BindList(OrderViewData.Materials).GetHtml()
+            </div>
+        </div>
+
+        <div class="row" >
+            <div class="col-md-3">
+                Product Price:
+            </div>
+            <div class="col-md-6">
+
+                @Html.DevExpress().TextBoxFor(model => model.ProductPrice,
+                settings =>
+                {
+                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                 }
+                ).GetHtml()
+            </div>
+        </div>
+
+        <div class="row" >
+            <div class="col-md-5">
+               Include Product Price in Order:
+            </div>
+            <div class="col-md-3" >
+
+                @Html.DevExpress().CheckBoxFor(model => model.IncludeProductPrice,
+                settings =>
+                {
+                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    settings.Properties.ClientSideEvents.CheckedChanged = "IncludePriceCombo_Click";
+
+                }
+                ).GetHtml()
+            </div>
+        </div>
+
+
+    </div>
+</div>
+   
+      
+       
+   
+
+<hr />
+        <div class="row">
+            <div class="col-md-6">
+
+                
+
+                @Html.DevExpress().Button(btnSettings =>
+{
+    btnSettings.Name = "btnProductUpdateSave";
+    btnSettings.Text = "UpdateAndSave";
+    btnSettings.ControlStyle.CssClass = "button";
+    btnSettings.ClientSideEvents.Click = "Product_UpdateSaveBtn_Click";
+}).GetHtml()
+
+                @Html.DevExpress().Button(btnSettings =>
+{
+    btnSettings.Name = "btnProductClear";
+    btnSettings.Text = "Clear";
+    btnSettings.ControlStyle.CssClass = "button";
+    btnSettings.ClientSideEvents.Click = "Product_ClearBtn_Click";
+}).GetHtml()
+            </div>
+            <div class="col-md-6">
+            </div>
+        </div>
+
+
