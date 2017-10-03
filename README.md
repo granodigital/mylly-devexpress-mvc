@@ -18,7 +18,7 @@ C#, CSHTML, CSS, JS.
 For more assembly information, see web.config file in the project.
 
 ## Nuget Package
-Package source: nuget.org.
+Package source: nuget.org
 
 ## Build
 * Configuration: Active Debug mode
@@ -50,7 +50,7 @@ Without providing connection properties, this project build successfully. But fo
 for example: “Data Source=xyzERPDatabase; Initial Catalog=TestOrderDB; Integrated Security=True”
 
 ## SQL scripts:
-In Sql_Scripts file in the project, you can find Sql server database CREATE scripts and STORED PROCEDURES required for this project.
+In Sql_scripts file in the project, you can find Sql server database CREATE scripts and STORED PROCEDURES required for this project.
 
 ## More information:
 For more information please read: [How to build Asp.net web application Project using Visual Studio 2017](https://www.asp.net/downloads).
