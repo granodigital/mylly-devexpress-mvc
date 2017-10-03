@@ -5,7 +5,7 @@ This project was generated using Microsoft Visual Studio, version 2017.
 ## Development language
 C#, CSHTML, CSS, JS.
 
-## Development server
+## Development server assemblies
 * .Net MVC Framework, version 4.5.2
 * DevExpress.Web.MVC5, version 16.2.5.0
 * Bootstrap, version 3.0.0
@@ -17,7 +17,7 @@ C#, CSHTML, CSS, JS.
 
 For more assembly information, see web.config file in the project.
 
-## Nuget Package
+## Nuget package
 Package source: nuget.org
 
 ## Build
