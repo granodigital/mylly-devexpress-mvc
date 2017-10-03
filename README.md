@@ -25,16 +25,16 @@ Package source: nuget.org
 * Platform target: Any CPU
 * Output path: bin\
 
-## Debuggers:
+## Debugger
 Select ASP.NET
 
-## Web Servers: 
+## Web Servers 
 * Requires IIS Express server
 * Set project URL: example (http://localhost:60500/) 
-## Browser settings:
+## Browser settings
 Runs on any browser. For best result use Google Chrome and FireFox.
 
-## SQL server connection:
+## SQL server connection
 Without providing connection properties, this project build successfully. But for proper functioning and testing of this project, please provide SQL server connection string in web.config file.
 
 <connectionStrings>
@@ -49,9 +49,9 @@ Without providing connection properties, this project build successfully. But fo
 
 for example: “Data Source=xyzERPDatabase; Initial Catalog=TestOrderDB; Integrated Security=True”
 
-## SQL scripts:
-In Sql_scripts file in the project, you can find Sql server database CREATE scripts and STORED PROCEDURES required for this project.
+## SQL scripts
+In SQL_scripts file in the project, you can find Sql server database CREATE scripts and STORED PROCEDURES required for this project.
 
-## More information:
+## More information
 For more information please read: [How to build Asp.net web application Project using Visual Studio 2017](https://www.asp.net/downloads).
 
