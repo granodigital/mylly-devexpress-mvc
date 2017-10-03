@@ -28,7 +28,7 @@ Package source: nuget.org
 ## Debugger
 Select ASP.NET
 
-## Web Servers 
+## Web servers 
 * Requires IIS Express server
 * Set project URL: example (http://localhost:60500/) 
 ## Browser settings
