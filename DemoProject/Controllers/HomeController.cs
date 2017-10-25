@@ -197,10 +197,13 @@ namespace DemoProject.Controllers
 
             int requestedTabIndex = 0;
             switch (command)
-                {               
+                {
+               
                 case "ADDPRODUCT":
                         {
+
                         order = Store_Current_Product_In_ViewData(order);
+
                         requestedTabIndex = Convert.ToInt32(parameter) - 1;
                         OrderViewData.ActiveProductIndex = requestedTabIndex;
                         foreach (Product p in OrderViewData.Products)
@@ -215,7 +218,10 @@ namespace DemoProject.Controllers
                           
                         });
                         OrderViewData.Products[OrderViewData.ActiveProductIndex].IsActive = true;
-                        order = Retreive_Processed_Product_ViewDataValues_in_Model(order);       }
+
+                        order = Retreive_Processed_Product_ViewDataValues_in_Model(order);
+                       
+                    }
                     break;
                 case "SETFIRSTPRODUCT":
                     {
@@ -255,8 +261,30 @@ namespace DemoProject.Controllers
                         order = Store_Current_Product_In_ViewData(order);
                         
                         order = Retreive_Processed_Product_ViewDataValues_in_Model(order);
+
+
+                        //if (parameter == "true")  //Include_Product_Price check is true 
+                        //{
+                        //    //remove current productprice from total price
+                        //    order.ProductPrice = order.ProductPrice - OrderViewData.Products[OrderViewData.ActiveProductIndex].ProductPrice;
+
+                        //    OrderViewData.CalculatedPrice += order.ProductPrice;
+                        //    OrderViewData.Products[OrderViewData.ActiveProductIndex].IncludeProductPrice = true;
+
+                        //    //add new updated productprice in total price
+
+                        //}
+                        //else
+                        //{
+                        //    // remove current productprice from total price 
+                        //}
+
+
                     }
-                    break;  }
+                    break;
+
+
+            }
 
             return PartialView("_ProductTabControl_Partial",order);
         }
